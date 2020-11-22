@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+require('dotenv').config()
 
 const Goal = require('./models/goal');
 
@@ -79,7 +79,7 @@ app.delete('/goals/:id', async (req, res) => {
 });
 
 mongoose.connect(
-  'mongodb://gagan:123456@mongodb:27017/course-goals?authSource=admin',
+  `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/course-goals?authSource=admin`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
