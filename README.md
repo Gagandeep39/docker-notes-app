@@ -16,7 +16,7 @@
 
 ### MongoDB database
 
-1. `docker run --name mongodb -p 27017:27017 --rm -d mongo` Run mongoDB image
+1. `docker run --name mongodb -v mydata:/data/db -p 27017:27017 --rm -d mongo` Run mongoDB image, with a named volume mydata
 
 ### NodeJS server
 
@@ -38,7 +38,7 @@
 ## Steps to Run - Method 2
 
 1. `docker network create goals-network`
-2. `docker run --name mongodb --network goals-network --rm -d mongo`
+2. `docker run --name mongodb -v mydata:/data/db --network goals-network --rm -d mongo` Createdocker container with named volume for persistence
 3. Update hostname in backend code as `mongodb:27017`
 4. `docker run --rm --network goals-network -p 8000:8000 --name goal-server-container goal-server:1` Run Image
 5. Update hostname in frontend to `localhost:8000`
@@ -46,3 +46,4 @@
 
 ### NOTE
 - Frontend code will run static code on browser, even though it is a part of network, requests sent from frontend cant use docker image name, it must use locahost. Server must expose its port number to be accessed by frontend
+- Basically react uses Browser side java code, it runs on clients machine
