@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    volumes:
+        # named volume
+      - mydata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: gagan
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+      # - "MONGO_INITDB_ROOT_USERNAME=gagan"  # Another way of writing env
+  backend:
+    # build: 
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    build: ./backend
+    ports:
+      - '8000:8000'
+    volumes:
+      - logs:/app/logs
+      # Add support for live development (Causes issues with windows)
+      # - ./backend:/app
+      # - /app/node_modules
+    env_file: 
+      - ./env/backend.env
+    depends_on: 
+      - mongodb
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - './frontend/src:/app/src'
+    # Support for '-it' flag required by react
+    stdin_open: true
+    tty: true
+    depends_on: 
+      - backend
+    env_file: 
+      - ./env/frontend.env
+volumes:
+  mydata:
+  logs:
+
+# All named volumes must be declared here at root level
+# Mulptiple services using same named volume will share the volume
+# docker-compose up - Start
+# docker-compose down - Stop containes
+# docker-compose down -v Stop container and delte named volumes
+# We can use service name, container name and IP to conntect to another container
