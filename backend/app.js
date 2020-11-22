@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const Goal = require('./models/goal');
 
@@ -15,16 +16,10 @@ const accessLogStream = fs.createWriteStream(
   { flags: 'a' }
 );
 
+app.use(cors());
 app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
 
 app.get('/goals', async (req, res) => {
   console.log('TRYING TO FETCH GOALS');
@@ -95,7 +90,7 @@ mongoose.connect(
       console.error(err);
     } else {
       console.log('CONNECTED TO MONGODB');
-      app.listen(80);
+      app.listen(8000);
     }
   }
 );
