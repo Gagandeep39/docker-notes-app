@@ -11,7 +11,6 @@
 - Always make Image after changing hostnames
 - `docker build -t goal-server:1 .` Create backend image
 - `docker build -t goal-frontend:1 .` Create frontned image
-- **Run** using method 2 first (Will not require any changes), as the code contains hardcoded IPs.
 
 ## Steps to Run - Method 1
 
@@ -47,3 +46,14 @@
 ### NOTE
 - Frontend code will run static code on browser, even though it is a part of network, requests sent from frontend cant use docker image name, it must use locahost. Server must expose its port number to be accessed by frontend
 - Basically react uses Browser side java code, it runs on clients machine
+
+## Steps to run - Method 3 (Dockercompose)
+
+- Startup by single command
+- Creates a network for all services inside a file automaticaly
+- docker-compose up - Start
+- docker-compose down - Stop containes
+- docker-compose down -v Stop container and delte named volumes
+- All named volumes must be declared here at root level
+- Mulptiple services using same named volume will share the volume
+- We can use service name, container name and IP to conntect to another container

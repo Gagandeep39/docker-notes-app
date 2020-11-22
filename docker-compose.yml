@@ -44,7 +44,7 @@ volumes:
 
 # All named volumes must be declared here at root level
 # Mulptiple services using same named volume will share the volume
-# docker-compose up - Start
-# docker-compose down - Stop containes
-# docker-compose down -v Stop container and delte named volumes
+# 'docker-compose up -d --build' - Rebuild all images and start
+# 'docker-compose down' - Stop containes
+# 'docker-compose down -v -rmi' Stop container and delte named volumes and remove containers
 # We can use service name, container name and IP to conntect to another container
