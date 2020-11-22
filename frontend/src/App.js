@@ -8,13 +8,14 @@ function App() {
   const [loadedGoals, setLoadedGoals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const address = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`
 
   useEffect(function () {
     async function fetchData() {
       setIsLoading(true);
 
       try {
-        const response = await fetch('http://localhost:8000/goals');
+        const response = await fetch(`http://${address}/goals`);
 
         const resData = await response.json();
 
@@ -33,13 +34,14 @@ function App() {
     }
 
     fetchData();
-  }, []);
+  }, // eslint-disable-next-line
+  []);
 
   async function addGoalHandler(goalText) {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/goals', {
+      const response = await fetch(`http://${address}/goals`, {
         method: 'POST',
         body: JSON.stringify({
           text: goalText,
@@ -78,7 +80,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/goals/' + goalId, {
+      const response = await fetch(`http://${address}/goals/` + goalId, {
         method: 'DELETE',
       });
 
